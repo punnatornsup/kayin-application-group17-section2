@@ -1,14 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'SignUpScreen.dart';
 import 'HomeScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -49,7 +41,7 @@ class _LoginDemoState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                   hintText: 'Enter valid email',
-                  errorText: _validate ? "Please enter your Email." : null,
+                  errorText: _validate ? "Please enter you Email" : null,
                 ),
               ),
             ),
@@ -63,7 +55,7 @@ class _LoginDemoState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                   labelText: 'Password',
                   hintText: 'Enter your secure password',
-                  errorText: _validate ? "Please enter your Password." : null,
+                  errorText: _validate ? "Please enter you Email" : null,
                 ),
               ),
             ),
@@ -83,19 +75,19 @@ class _LoginDemoState extends State<LoginScreen> {
                       Size(double.infinity, 50), // Set the button's size
                 ),
                 onPressed: () {
-                  setState(() {
-                    _validate = _emailcontroller.text.isEmpty || _passwordcontroller.text.isEmpty;
-                  });
-                  if (!_validate) {
-                    AuthService authService = AuthService();
-                    authService.signInWithEmailAndPassword(_emailcontroller.text, _passwordcontroller.text).then((user) {
-                      if (user != null) {
-                        print('Login successful!');
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                      } else {
-                        print('Login failed');
-                      }
+                  bool isEmailEmpty = _emailcontroller.text.isEmpty;
+                  bool isPasswordEmpty = _passwordcontroller.text.isEmpty;
+                  if (isEmailEmpty || isPasswordEmpty) {
+                    // Set the state to reflect that there is a validation error
+                    setState(() {
+                      _validate = true;
                     });
+                  } else {
+                    // If both fields are filled, navigate to the HomeScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
                   }
                 },
                 child: Text('Login',
@@ -122,21 +114,5 @@ class _LoginDemoState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-}
-
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // Sign in with email and password
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      User? user = result.user;
-      return user;
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
   }
 }

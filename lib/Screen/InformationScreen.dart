@@ -13,11 +13,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Comfortaa',
       ),
-      home: InformationPage(),
+      home: InformationScreen(),
     );
   }
 }
-class InformationPage extends StatelessWidget {
+class InformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
