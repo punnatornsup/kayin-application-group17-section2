@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "309777552936",
+    "project_id": "karin-application-database",
+    "storage_bucket": "karin-application-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309777552936:android:539758e2a20952c21a871d",
+        "android_client_info": {
+          "package_name": "kayin.database"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnc48NSoHlFNjigw9wZo-lmL9HXw4oLX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
