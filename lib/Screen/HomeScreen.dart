@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ProfileScreen.dart';
 import 'InformationScreen.dart';
+import 'AddPillScreen.dart';
 
 // Assuming you have a StatefulWidget for your HomeScreen
 
@@ -10,6 +11,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  List<Map> pillsData = [];
+
+  @override
+  void didChangeDependencies() {
+  super.didChangeDependencies();
+  // Fetch the pills data when the screen's dependencies change, i.e., when it's navigated back to
+  // This could fetch from a Provider, database, etc., depending on your state management
+}
   // Function to show the add pills popup
   void _showAddPillsPopup() {
     showModalBottomSheet(
@@ -50,7 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     onPressed: () {
-                      // TODO: Add your pill addition logic here
+                     Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddPillScreen()),
+              );
                     },
                     child: Text(
                       'Add pills',
@@ -115,9 +128,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Center(
-          // Your HomeScreen body here
-          ),
+      body: ListView.builder(
+      itemCount: pillsData.length,
+      itemBuilder: (context, index) {
+        final pill = pillsData[index];
+        return ListTile(
+          title: Text(pill['name']),
+          subtitle: Text('${pill['time']} on ${pill['days'].join(", ")}'),
+          // ... additional pill info
+        );
+      },
+    ),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromARGB(255, 242, 149, 80),
         child: Row(
