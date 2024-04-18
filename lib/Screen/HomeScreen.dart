@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'HomeScreen.dart';
 import 'ProfileScreen.dart';
 import 'InformationScreen.dart';
 
@@ -34,8 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Text(
                   'Add Pills',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
                 SizedBox(height: 20), // For spacing
                 // ... your text fields and other inputs ...
                 SizedBox(
@@ -98,10 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
         title: Text('My pill',
-            style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info_outline),

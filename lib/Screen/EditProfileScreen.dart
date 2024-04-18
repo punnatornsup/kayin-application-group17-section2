@@ -81,8 +81,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 149, 183, 255),
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        backgroundColor: Color.fromARGB(255, 149, 183, 255),
+        title: Text('Edit Profile',
+            style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black)),
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -107,32 +114,104 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   24), // Give some space between the image and the text fields
           TextField(
             controller: _nameController,
-            decoration: InputDecoration(labelText: 'Name'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Name',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           TextField(
             controller: _ageController,
-            decoration: InputDecoration(labelText: 'Age'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Age',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           TextField(
             controller: _medicalConditionController,
-            decoration: InputDecoration(labelText: 'Medical Condition'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Medical Condition',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           TextField(
             controller: _weightController,
-            decoration: InputDecoration(labelText: 'Weight'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Weight',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           TextField(
             controller: _heightController,
-            decoration: InputDecoration(labelText: 'Height'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Height',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           TextField(
             controller: _bloodTypeController,
-            decoration: InputDecoration(labelText: 'Blood Type'),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
+            decoration: InputDecoration(
+                labelText: 'Blood Type',
+                floatingLabelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black)),
           ),
           ElevatedButton(
             onPressed: _saveProfile,
-            child: Text('Save'),
-          ),
+            child: Text(
+              'Save',
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Comfortaa",
+                  color: Colors.black),
+            ),)
         ],
       ),
     );

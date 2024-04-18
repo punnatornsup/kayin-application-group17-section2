@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 149, 183, 255),
-          title: Text('My profile'),
+          title: Text('My profile', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
         ),
         body: Column(
           children: [
@@ -82,8 +82,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         });
                       }
                     },
-                    child: Text('Edit'),
-                  ),
+                    child: Text('Edit', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Comfortaa', color: Colors.black)),
+                ),
                 ],
               ),
             ),
@@ -120,8 +120,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(value.isNotEmpty ? value : 'Not set'),
+          Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+          Text(value.isNotEmpty ? value : 'Not set', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Comfortaa', color: Colors.black)),
         ],
       ),
     );

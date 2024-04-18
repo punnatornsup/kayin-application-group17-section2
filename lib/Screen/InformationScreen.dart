@@ -28,14 +28,14 @@ class InformationScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(16), // Added some padding for layout
+              padding: EdgeInsets.all(30), // Added some padding for layout
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Information', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)),
-                  Text('KAYIN', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white)),
-                  Text('created by', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)),
+                  Text('Information', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+                  Text('KAYIN', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+                  Text('created by', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
                 ],
               ),
             ),
@@ -98,15 +98,21 @@ class ProfileWidget extends StatelessWidget {
     return Column(
       children: <Widget>[
         CircleAvatar(
-          radius: 60,
+          radius: 57,
           backgroundImage: AssetImage(imagePath),
+          // Adding a BoxFit property to ensure the image covers the avatar area
+          child: ClipOval(
+            child: Image.asset(
+              imagePath,
+               // This scales the image uniformly until it fills the avatar space
+            ),
+          ),
         ),
-        SizedBox(height: 10),
-        Text(name, style: TextStyle(fontSize: 20, color: Colors.white)),
-        Text(id, style: TextStyle(fontSize: 16, color: Colors.white)),
+        SizedBox(height: 20),
+        Text(name, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+        Text(id, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
       ],
     );
   }
+  
 }
-
-
