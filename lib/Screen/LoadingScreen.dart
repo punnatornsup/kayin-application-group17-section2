@@ -15,7 +15,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   _navigateHome() async {
-    await Future.delayed(Duration(seconds: 2), () {});
+    await Future.delayed(Duration(seconds: 10), () {});
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())); // Redirect to HomeScreen
   }
 
@@ -27,8 +27,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('images/Logo-removebg.png'), // Your image path here
-            SizedBox(height: 24),
+            Image.asset('images/Logo-removebg.png',fit: BoxFit.fill,height: 500,
+  width: 500,),
             Text('KAYIN', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
             SizedBox(height: 10),
           ],
