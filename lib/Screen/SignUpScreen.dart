@@ -80,7 +80,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextField(
               controller: _emailcontroller,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: 'Email',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -90,7 +98,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextField(
               controller: _usernamecontroller,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Username',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -100,7 +116,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _password1controller,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Password',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -110,7 +134,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _password2controller,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Retype Password',
+                labelText: 'Retype Password',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _retypepasswordvalid ? 'Password do not match' : null,
               ),
@@ -125,8 +157,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               onPressed: _signUp,
               child: Text('SIGN UP',
-                  style: TextStyle(color: Colors.white, fontSize: 25)),
-            ),
+                  style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.white),
+            )),
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
@@ -136,8 +172,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: const Text(
                 'Already have an account? LOGIN',
                 style: TextStyle(
-                    color: Colors.orange, decoration: TextDecoration.underline),
-              ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Comfortaa',
+                  color: Color.fromARGB(255, 242, 149, 80),
+                  decoration: TextDecoration.underline,
+                )),
             ),
           ],
         ),

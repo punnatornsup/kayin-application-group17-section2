@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'ProfileScreen.dart';
 import 'InformationScreen.dart';
@@ -31,9 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  'Add Pills',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+                Text('Add Pills',
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.white)),
                 SizedBox(height: 20), // For spacing
                 // ... your text fields and other inputs ...
                 SizedBox(
@@ -96,7 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
         title: Text('My pill',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
+            style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.white)),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info_outline),
@@ -128,8 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.add_box, size: 40), // Replace with your app icon
               onPressed: _showAddPillsPopup,
+              icon: SizedBox(
+                width: 80, // Set your width
+                height:
+                    80, // Set your height, keep it the same as width for a square aspect ratio
+                child: Image.asset('images/Logo-removebg.png'),
+              ),
             ),
             IconButton(
               icon: Icon(Icons.person, size: 40),

@@ -86,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
         title: Text('Edit Profile',
             style: TextStyle(
-                fontSize: 25,
+                fontSize: 23.5,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
                 color: Colors.black)),
@@ -119,8 +119,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
+                
             decoration: InputDecoration(
-                labelText: 'Name',
+                labelText: 'Name',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -135,7 +140,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Age',
+                labelText: 'Age',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -150,7 +159,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Medical Condition',
+                labelText: 'Medical Condition',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -165,7 +178,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Weight',
+                labelText: 'Weight',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -180,7 +197,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Height',
+                labelText: 'Height',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -195,7 +216,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontFamily: 'Comfortaa',
                 color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Blood Type',
+                labelText: 'Blood Type',labelStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,

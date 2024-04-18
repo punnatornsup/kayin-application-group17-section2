@@ -39,7 +39,19 @@ class _LoginDemoState extends State<LoginScreen> {
                 controller: _emailcontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Email',
+                  labelText: 'Email',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black) ,hintStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                   hintText: 'Enter valid email',
                   errorText: _validate ? "Please enter you Email" : null,
                 ),
@@ -53,7 +65,19 @@ class _LoginDemoState extends State<LoginScreen> {
                 controller: _passwordcontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Password',labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),floatingLabelStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),hintStyle: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.black),
                   hintText: 'Enter your secure password',
                   errorText: _validate ? "Please enter you Email" : null,
                 ),
@@ -91,8 +115,12 @@ class _LoginDemoState extends State<LoginScreen> {
                   }
                 },
                 child: Text('Login',
-                    style: TextStyle(color: Colors.white, fontSize: 25)),
-              ),
+                    style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',
+                color: Colors.white),
+              )),
             ),
             GestureDetector(
               onTap: () {
@@ -105,7 +133,10 @@ class _LoginDemoState extends State<LoginScreen> {
               child: Text(
                 'Don\'t have an account? SIGN UP',
                 style: TextStyle(
-                  color: Colors.orange,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Comfortaa',
+                  color: Color.fromARGB(255, 242, 149, 80),
                   decoration: TextDecoration.underline,
                 ),
               ),
