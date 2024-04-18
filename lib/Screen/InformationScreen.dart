@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'ProfileScreen.dart';
+import 'HomeScreen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class InformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,8 @@ class InformationScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
+              padding: EdgeInsets.all(16), // Added some padding for layout
+              alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -43,26 +47,32 @@ class InformationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity, // Makes the Container fill the width of the screen
-              color: Colors.orange,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.camera_alt, size: 35),
-                    onPressed: () {
-                      // Implement camera functionality
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.photo, size: 35),
-                    onPressed: () {
-                      // Implement gallery functionality
-                    },
-                  ),
-                ],
-              ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 242, 149, 80),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home, size: 40),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.person, size: 40),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
+              },
             ),
           ],
         ),
@@ -70,8 +80,6 @@ class InformationScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 class ProfileWidget extends StatelessWidget {
   final String name;
@@ -90,8 +98,8 @@ class ProfileWidget extends StatelessWidget {
     return Column(
       children: <Widget>[
         CircleAvatar(
-          radius: 60, // Increased radius for a bigger picture
-          backgroundImage: AssetImage(imagePath), // Using an AssetImage, but you could use a NetworkImage for network paths
+          radius: 60,
+          backgroundImage: AssetImage(imagePath),
         ),
         SizedBox(height: 10),
         Text(name, style: TextStyle(fontSize: 20, color: Colors.white)),
@@ -100,3 +108,5 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 }
+
+
