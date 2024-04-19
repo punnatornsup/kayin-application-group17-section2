@@ -1,3 +1,68 @@
+// import 'package:flutter/material.dart';
+
+// class AddPillScreen extends StatefulWidget {
+//   @override
+//   _AddPillScreenState createState() => _AddPillScreenState();
+// }
+
+// class _AddPillScreenState extends State<AddPillScreen> {
+//   String pillName = '';
+//   TimeOfDay? pillTime;
+//   List<String> days = []; // Store the selected days here
+
+//   void _savePill() {
+//     if (pillName.isNotEmpty && pillTime != null && days.isNotEmpty) {
+//       // Save the pill
+//       final pillData = {
+//         'name': pillName,
+//         'time': pillTime,
+//         'days': days,
+//       };
+//       // Use a provider, bloc, or any state management to save this data
+//       // Then pop the screen
+//       Navigator.pop(context, pillData); // Pass the pill data back to the HomeScreen
+//     } else {
+//       // Show an error or prompt to fill all the fields
+//     }
+//   }
+
+//   void _selectTime() async {
+//     final TimeOfDay? time = await showTimePicker(
+//       context: context,
+//       initialTime: TimeOfDay.now(),
+//     );
+//     if (time != null && time != pillTime) {
+//       setState(() {
+//         pillTime = time;
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Add Pill')),
+//       body: Column(
+//         children: [
+//           TextField(
+//             onChanged: (value) => pillName = value,
+//             decoration: InputDecoration(labelText: 'Pill Name'),
+//           ),
+//           ElevatedButton(
+//             onPressed: _selectTime,
+//             child: Text(pillTime?.format(context) ?? 'Select Time'),
+//           ),
+//           // Add toggle buttons or checkboxes for selecting days
+//           // ...
+//           ElevatedButton(
+//             onPressed: _savePill,
+//             child: Text('Save Pill'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 
 class AddPillScreen extends StatefulWidget {
@@ -9,13 +74,24 @@ class _AddPillScreenState extends State<AddPillScreen> {
   String pillName = '';
   TimeOfDay? pillTime;
   List<String> days = []; // Store the selected days here
+  final List<String> allDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  Map<String, bool> dayToggles = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize toggle state for each day
+    allDays.forEach((day) {
+      dayToggles[day] = false;
+    });
+  }
 
   void _savePill() {
     if (pillName.isNotEmpty && pillTime != null && days.isNotEmpty) {
       // Save the pill
       final pillData = {
         'name': pillName,
-        'time': pillTime,
+        'time': '${pillTime!.hour}:${pillTime!.minute}',
         'days': days,
       };
       // Use a provider, bloc, or any state management to save this data
@@ -23,6 +99,10 @@ class _AddPillScreenState extends State<AddPillScreen> {
       Navigator.pop(context, pillData); // Pass the pill data back to the HomeScreen
     } else {
       // Show an error or prompt to fill all the fields
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Please fill all fields'),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 
@@ -36,6 +116,17 @@ class _AddPillScreenState extends State<AddPillScreen> {
         pillTime = time;
       });
     }
+  }
+
+  void _onDayToggled(String day, bool isSelected) {
+    setState(() {
+      dayToggles[day] = isSelected;
+      if (isSelected) {
+        days.add(day);
+      } else {
+        days.remove(day);
+      }
+    });
   }
 
   @override
@@ -52,8 +143,13 @@ class _AddPillScreenState extends State<AddPillScreen> {
             onPressed: _selectTime,
             child: Text(pillTime?.format(context) ?? 'Select Time'),
           ),
-          // Add toggle buttons or checkboxes for selecting days
-          // ...
+          Wrap(
+            children: allDays.map((day) => ChoiceChip(
+              label: Text(day),
+              selected: dayToggles[day]!,
+              onSelected: (isSelected) => _onDayToggled(day, isSelected),
+            )).toList(),
+          ),
           ElevatedButton(
             onPressed: _savePill,
             child: Text('Save Pill'),
