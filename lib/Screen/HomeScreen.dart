@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'AddPillScreen.dart';
 import 'ProfileScreen.dart';
@@ -11,6 +12,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pills = [];
 
+  @override
+  void initState() {
+    super.initState();
+    // Start listening to Firestore
+    FirebaseFirestore.instance
+        .collection('pills')
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        pills = snapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+      });
+    });
+  }
+
   void _showAddPillsPopup() {
     showModalBottomSheet(
       context: context,
@@ -18,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: ClipRRect(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30.0),
               topRight: Radius.circular(30.0),
             ),
@@ -30,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('Add Pills',
+                  const Text('Add Pills',
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -61,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         'Add pills',
                         style: TextStyle(
                             fontSize: 25,
@@ -83,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       onPressed: () => Navigator.pop(context),
-                      child: Text(
+                      child: const Text(
                         'Cancel',
                         style: TextStyle(
                             fontSize: 25,
@@ -104,7 +121,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 149, 183, 255),
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 149, 183, 255),
         title: Text('Home'),
         actions: <Widget>[
           IconButton(

@@ -30,9 +30,7 @@ class _LoginDemoState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -41,7 +39,6 @@ class _LoginDemoState extends State<LoginScreen> {
     _passwordcontroller.dispose();
     super.dispose();
   }
-
 
   Future<bool> authenUsernamepassword(String userinput,String userpassword) async {
     try {
@@ -75,7 +72,7 @@ class _LoginDemoState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Login',
+            const Text('Login',
                 style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
@@ -89,17 +86,17 @@ class _LoginDemoState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
                       color: Colors.black),
-                  floatingLabelStyle: TextStyle(
+                  floatingLabelStyle: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
                       color: Colors.black),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
@@ -118,17 +115,17 @@ class _LoginDemoState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
                       color: Colors.black),
-                  floatingLabelStyle: TextStyle(
+                  floatingLabelStyle: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
                       color: Colors.black),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Comfortaa',
@@ -201,7 +198,7 @@ class _LoginDemoState extends State<LoginScreen> {
                     
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                         fontSize: 23,
@@ -218,7 +215,7 @@ class _LoginDemoState extends State<LoginScreen> {
                   MaterialPageRoute(builder: (context) => SignUpScreen()),
                 );
               },
-              child: Text(
+              child: const Text(
                 'Don\'t have an account? SIGN UP',
                 style: TextStyle(
                   fontSize: 14,

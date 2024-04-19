@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -89,17 +87,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _emailcontroller,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                floatingLabelStyle: TextStyle(
+                floatingLabelStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
               keyboardType: TextInputType.emailAddress,
@@ -109,17 +107,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _usernamecontroller,
               decoration: InputDecoration(
                 labelText: 'Username',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                floatingLabelStyle: TextStyle(
+                floatingLabelStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
             ),
@@ -129,49 +127,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                floatingLabelStyle: TextStyle(
+                floatingLabelStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _password2controller,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Retype Password',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                floatingLabelStyle: TextStyle(
+                floatingLabelStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                     color: Colors.black),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 errorText:
                     _retypepasswordvalid ? 'Password do not match' : null,
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: const Color.fromARGB(
                       255, 82, 121, 189), // Text Color (Foreground color)
                   minimumSize:
-                      Size(double.infinity, 50), // Set the button's size
+                      const Size(double.infinity, 50), // Set the button's size
                 ),
                 onPressed: () async {
                   _signUp();
@@ -196,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   'SIGN UP',
                   style: TextStyle(
                       fontSize: 23,
@@ -204,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontFamily: 'Comfortaa',
                       color: Colors.white),
                 )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Navigator.pop(
@@ -224,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
       }
-      return Scaffold(appBar: AppBar(title: Text('error'),),);
+      return Scaffold(appBar: AppBar(title: const Text('error'),),);
 
       
       
