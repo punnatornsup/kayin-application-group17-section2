@@ -1,3 +1,7 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'LoginScreen.dart';
 
@@ -7,13 +11,19 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final Future<FirebaseApp> firebase = Firebase.initializeApp();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  
+
+
+  bool _validate = false;
+  bool _retypepasswordvalid = false;
+  String? _errorText;
+
   final _emailcontroller = TextEditingController();
   final _usernamecontroller = TextEditingController();
   final _password1controller = TextEditingController();
   final _password2controller = TextEditingController();
-  bool _validate = false;
-  bool _retypepasswordvalid = false;
-  String? _errorText;
 
   @override
   void dispose() {
@@ -24,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _signUp() {
+  Future<void> _signUp() async {
     setState(() {
       bool isEmailEmpty = _emailcontroller.text.isEmpty;
       bool isUsernameEmpty = _usernamecontroller.text.isEmpty;
@@ -48,22 +58,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _retypepasswordvalid = false;
       }
     });
-    if (!_validate) {
-      if (!_retypepasswordvalid) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return FutureBuilder(future: firebase, builder: (context, snapshot){
+      // if (snapshot.hasError){
+      //   return Placeholder();
+      // }
+
+      if(snapshot.connectionState == ConnectionState.done){
+      return Scaffold(
       backgroundColor: const Color.fromARGB(
           255, 149, 183, 255), // Replace with the exact color you want
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,15 +88,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextField(
               controller: _emailcontroller,
               decoration: InputDecoration(
-                labelText: 'Email',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                labelText: 'Email',
+                labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
+                floatingLabelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -98,15 +108,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextField(
               controller: _usernamecontroller,
               decoration: InputDecoration(
-                labelText: 'Username',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                labelText: 'Username',
+                labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
+                floatingLabelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -116,15 +128,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _password1controller,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Password',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                labelText: 'Password',
+                labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
+                floatingLabelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
                 border: OutlineInputBorder(),
                 errorText: _validate ? _errorText : null,
               ),
@@ -134,54 +148,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: _password2controller,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Retype Password',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                labelText: 'Retype Password',
+                labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
+                floatingLabelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Colors.black),
                 border: OutlineInputBorder(),
-                errorText: _retypepasswordvalid ? 'Password do not match' : null,
+                errorText:
+                    _retypepasswordvalid ? 'Password do not match' : null,
               ),
             ),
             SizedBox(height: 40),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: const Color.fromARGB(
-                    255, 82, 121, 189), // Text Color (Foreground color)
-                minimumSize: Size(double.infinity, 50), // Set the button's size
-              ),
-              onPressed: _signUp,
-              child: Text('SIGN UP',
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromARGB(
+                      255, 82, 121, 189), // Text Color (Foreground color)
+                  minimumSize:
+                      Size(double.infinity, 50), // Set the button's size
+                ),
+                onPressed: () async {
+                  _signUp();
+                  
+                  if (!_validate) {
+                    if (!_retypepasswordvalid) {
+                      // Add the new user to the 'Kayin_User' collection with auto-generated ID
+                      DocumentReference userDoc =
+                          await firestore.collection('Kayin_User').add({
+                        'Email': _emailcontroller.text,
+                        'Username': _usernamecontroller.text,
+                        'password': _password1controller.text
+                      });
+
+                      // Log the document ID, which is automatically generated
+                      print("Created new user with ID: ${userDoc.id}");
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    }
+                  }
+                },
+                child: Text(
+                  'SIGN UP',
                   style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.white),
-            )),
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.white),
+                )),
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Navigator.pop(
                     context); // Assuming this page was pushed onto the stack, this will go back
               },
-              child: const Text(
-                'Already have an account? LOGIN',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Comfortaa',
-                  color: Color.fromARGB(255, 242, 149, 80),
-                  decoration: TextDecoration.underline,
-                )),
+              child: const Text('Already have an account? LOGIN',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                    color: Color.fromARGB(255, 242, 149, 80),
+                    decoration: TextDecoration.underline,
+                  )),
             ),
           ],
         ),
       ),
     );
+      }
+      return Scaffold(appBar: AppBar(title: Text('error'),),);
+
+      
+      
+    }
+    );
+    
   }
 }
+
+
+
+
+
+

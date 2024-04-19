@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'SignUpScreen.dart';
 import 'HomeScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+class kayinuser {
+  String email;
+  String name;
+  String password;
+
+  kayinuser({
+    required this.email,
+    required this.name,
+    required this.password,
+  });
+}
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginDemoState createState() => _LoginDemoState();
 }
+
+
 
 class _LoginDemoState extends State<LoginScreen> {
   final _emailcontroller = TextEditingController();
@@ -13,10 +29,43 @@ class _LoginDemoState extends State<LoginScreen> {
   bool _validate = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  @override
   void dispose() {
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     super.dispose();
+  }
+
+
+  Future<bool> authenUsernamepassword(String userinput,String userpassword) async {
+    try {
+      var userQuery = await FirebaseFirestore.instance
+          .collection('Kayin_User')
+          .where('Email', isEqualTo: userinput)
+          .get();
+
+      if (userQuery.docs.isNotEmpty) {
+        // Assuming 'Email', 'Username', and 'password' are the field names in Firestore
+        var userData = userQuery.docs.first.data();
+        print(userData);
+
+        if(userData['password'] == userpassword){
+          return true;
+        }
+      }
+
+      return false;
+    } catch (e) {
+      print('Error fetching user: $e');
+
+      return false;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -39,19 +88,22 @@ class _LoginDemoState extends State<LoginScreen> {
                 controller: _emailcontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Email',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black) ,hintStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                  labelText: 'Email',
+                  labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
+                  floatingLabelStyle: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
+                  hintStyle: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
                   hintText: 'Enter valid email',
                   errorText: _validate ? "Please enter you Email" : null,
                 ),
@@ -65,19 +117,22 @@ class _LoginDemoState extends State<LoginScreen> {
                 controller: _passwordcontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),floatingLabelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),hintStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.black),
+                  labelText: 'Password',
+                  labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
+                  floatingLabelStyle: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
+                  hintStyle: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                      color: Colors.black),
                   hintText: 'Enter your secure password',
                   errorText: _validate ? "Please enter you Email" : null,
                 ),
@@ -91,36 +146,69 @@ class _LoginDemoState extends State<LoginScreen> {
                   color: Color.fromARGB(255, 108, 147, 16),
                   borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromARGB(
-                      255, 82, 121, 189), // Text Color (Foreground color)
-                  minimumSize:
-                      Size(double.infinity, 50), // Set the button's size
-                ),
-                onPressed: () {
-                  bool isEmailEmpty = _emailcontroller.text.isEmpty;
-                  bool isPasswordEmpty = _passwordcontroller.text.isEmpty;
-                  if (isEmailEmpty || isPasswordEmpty) {
-                    // Set the state to reflect that there is a validation error
-                    setState(() {
-                      _validate = true;
-                    });
-                  } else {
-                    // If both fields are filled, navigate to the HomeScreen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
-                  }
-                },
-                child: Text('Login',
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(
+                        255, 82, 121, 189), // Text Color (Foreground color)
+                    minimumSize:
+                        Size(double.infinity, 50), // Set the button's size
+                  ),
+                  onPressed: () async {
+                    // Validate that the email and password are not empty
+                    bool isEmailEmpty = _emailcontroller.text.isEmpty;
+                    bool isPasswordEmpty = _passwordcontroller.text.isEmpty;
+                    if (isEmailEmpty || isPasswordEmpty) {
+                      setState(() {
+                        _validate = true; // Show validation errors
+                      });
+                    } else {
+                      setState(() {
+                        _validate = false; // Clear validation errors
+                      });
+
+                      // print(_emailcontroller.text);
+                      // Attempt to log in the user
+                      bool loginSuccessful = await authenUsernamepassword(
+                          _emailcontroller.text, _passwordcontroller.text);
+                      if (loginSuccessful) {
+                        // If login is successful, navigate to the HomeScreen
+                       
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                          );
+                        } else {
+                          showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: new Text("Login Failed"),
+                              content: new Text(
+                                  "Please check your email and password and try again."),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: new Text("Close"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        }
+                    
+                    }
+                  },
+                  child: Text(
+                    'Login',
                     style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Comfortaa',
-                color: Colors.white),
-              )),
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Comfortaa',
+                        color: Colors.white),
+                  )),
             ),
             GestureDetector(
               onTap: () {
@@ -140,7 +228,7 @@ class _LoginDemoState extends State<LoginScreen> {
                   decoration: TextDecoration.underline,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
