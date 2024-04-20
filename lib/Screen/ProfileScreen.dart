@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'EditProfileScreen.dart';
 
+
 class UserProfile {
   String name;
   String age;
@@ -24,6 +25,9 @@ class UserProfile {
 }
 
 class ProfileScreen extends StatefulWidget {
+final String useremail;
+ProfileScreen({required this.useremail});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -96,17 +100,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.home, size: 40),
+                icon: Icon(Icons.home, size: 40,color: Colors.white,),
                 onPressed: () {
                   Navigator.pushReplacement(
                     // Use pushReplacement to avoid stacking multiple home screens
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => HomeScreen(useremail: widget.useremail,)),
                   );
                 },
               ),
               IconButton(
-                icon: Icon(Icons.person, size: 40),
+                icon: Icon(Icons.person, size: 40,color: Colors.white,),
                 onPressed: () {},
               ),
             ],

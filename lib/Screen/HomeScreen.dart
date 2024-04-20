@@ -1,31 +1,66 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'AddPillScreen.dart';
 import 'ProfileScreen.dart';
 import 'InformationScreen.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String useremail;
+  HomeScreen({required this.useremail});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pills = [];
+  String useremail = "";
+  String userid = '';
+  String pillId ='';
 
   @override
   void initState() {
     super.initState();
-    // Start listening to Firestore
-    FirebaseFirestore.instance
-        .collection('pills')
-        .snapshots()
-        .listen((snapshot) {
+    useremail = widget.useremail;
+    initializeUserID();
+  }
+
+  Future<void> initializeUserID() async {
+    await getUserID(widget.useremail);
+  }
+
+  Future<void> getUserID(String email) async {
+    var userQuery = await FirebaseFirestore.instance
+        .collection('Kayin_User')
+        .where('Email', isEqualTo: email) // Changed to use the passed 'email' variable
+        .get();
+    if (userQuery.docs.isNotEmpty) { // Check if documents are returned
       setState(() {
-        pills = snapshot.docs
-            .map((doc) => doc.data() as Map<String, dynamic>)
-            .toList();
+        userid = userQuery.docs[0].id;
       });
-    });
+    } else {
+      // Handle the case where the user is not found
+      print('User not found');
+    }
+  }
+
+  Future<void> getPillID(String name) async {
+    if (userid.isNotEmpty) { // Ensure userid is set before calling
+      var userQuery = await FirebaseFirestore.instance
+          .collection('Kayin_User')
+          .doc(userid)
+          .collection('pills')
+          .where('name', isEqualTo: name)
+          .get();
+      if (userQuery.docs.isNotEmpty) {
+        setState(() {
+          pillId = userQuery.docs[0].id;
+        });
+      } else {
+        // Handle the case where no pill is found for the given name
+        print('Pill not found');
+      }
+    }
   }
 
   void _showAddPillsPopup() {
@@ -70,7 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         final result = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AddPillScreen()),
+                              builder: (context) => AddPillScreen(
+                                    useremail: useremail,
+                                  )),
                         );
                         if (result != null) {
                           setState(() {
@@ -123,30 +160,98 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 149, 183, 255),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
-        title: Text('Home'),
+        title: Text('Home',style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => InformationScreen()),
+                MaterialPageRoute(
+                    builder: (context) => InformationScreen(
+                          useremail: useremail,
+                        )),
               );
             },
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: pills.length,
-        itemBuilder: (context, index) {
-          final pill = pills[index];
-          return ListTile(
-            title: Text(pill['name']),
-            subtitle: Text('${pill['time']} - ${pill['days'].join(", ")}'),
+      body: userid.isNotEmpty
+      ? StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection(
+                'Kayin_User') // Assuming 'Kayin_User' is your user collection
+            .doc(userid) // The user's document ID
+            .collection('pills')
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData) {
+            return Center(child: Text('No Pills Found'));
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var pill =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              return Card(
+                color: Color.fromARGB(255, 82, 121, 189),
+                elevation: 4.0,
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                child: ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  leading: Icon(Icons.local_pharmacy,
+                      color: Colors.white), // Medicine icon
+                  title: Text(
+                    pill['name'],
+                    style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold,
+                fontFamily: 'Comfortaa',)
+                  ),
+                  subtitle: Row(
+                    children: <Widget>[
+                      Icon(Icons.alarm, size: 16,color: Colors.white70,),
+                      SizedBox(width: 4),
+                      Expanded(
+                        // Wrap with Expanded
+                        child: Text(
+                          '${pill['time']} - ${pill['days'].join(", ")}',
+                          overflow: TextOverflow
+                              .ellipsis, // Prevent text from overflowing
+                          style: const TextStyle(
+                              fontSize: 13,color: Colors.white70,fontWeight: FontWeight.normal,
+                fontFamily: 'Comfortaa',), // Adjust font size if necessary
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: IconButton(
+              icon: Icon(Icons.delete, size: 30, color: Color.fromARGB(255, 227, 116, 108)),
+              onPressed: () async {
+                await getPillID(pill['name']);
+                // Delete the pill from Firestore
+                FirebaseFirestore.instance
+                  .collection('Kayin_User')
+                  .doc(userid)
+                  .collection('pills')
+                  .doc(pillId) // Use the document ID
+                  .delete()
+                  .then((_) => print('Pill deleted'))
+                  .catchError((error) => print('Delete failed: $error'));
+              },
+            ),// Adjusted the icon size
+                ),
+              );
+            },
           );
         },
-      ),
+      )
+      : const Center(child: CircularProgressIndicator(),),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromARGB(255, 242, 149, 80),
         child: Row(
@@ -154,11 +259,14 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.home, size: 40),
+              icon: Icon(Icons.home, size: 40,color: Colors.white,),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                            useremail: useremail,
+                          )),
                 );
               },
             ),
@@ -168,15 +276,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 80, // Set your width
                 height:
                     80, // Set your height, keep it the same as width for a square aspect ratio
-                child: Image.asset('images/Logo-removebg.png'),
+                child: Image.asset('images/LogoKAYIN.jpg',width: 100,height: 200,),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.person, size: 40),
+              icon: Icon(Icons.person, size: 40,color: Colors.white,),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(builder: (context) => ProfileScreen(useremail: widget.useremail,)),
                 );
               },
             ),

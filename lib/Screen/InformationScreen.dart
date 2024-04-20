@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'ProfileScreen.dart';
 import 'HomeScreen.dart';
-void main() {
-  runApp(MyApp());
+
+
+
+class InformationScreen extends StatefulWidget {
+
+  final String useremail;
+  InformationScreen({required this.useremail});
+
+  @override
+  State<InformationScreen> createState() => _InformationScreenState();
 }
 
-class MyApp extends StatelessWidget {
+class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,15 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Comfortaa',
       ),
-      home: InformationScreen(),
-    );
-  }
-}
-
-class InformationScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+      home: Scaffold(
       backgroundColor: Color.fromARGB(255, 149, 183, 255),
       body: SingleChildScrollView( // Allows the column to be scrollable
         child: Column(
@@ -57,29 +57,33 @@ class InformationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.home, size: 40),
+              icon: Icon(Icons.home, size: 40,color: Colors.white,),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (context) => HomeScreen(useremail: widget.useremail,)),
                 );
               },
             ),
             IconButton(
-              icon: Icon(Icons.person, size: 40),
+              icon: Icon(Icons.person, size: 40,color: Colors.white,),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(builder: (context) => ProfileScreen(useremail: widget.useremail,)),
                 );
               },
             ),
           ],
         ),
       ),
+    )
     );
   }
 }
+
+
+
 
 class ProfileWidget extends StatelessWidget {
   final String name;
@@ -97,11 +101,11 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CircleAvatar(
-          radius: 57,
-          backgroundImage: AssetImage(imagePath),
+        CircleAvatar(backgroundColor: Color.fromARGB(255, 149, 183, 255),
+          radius: 60,
           // Adding a BoxFit property to ensure the image covers the avatar area
-          child: ClipOval(
+          child: ClipRRect(
+            borderRadius:BorderRadius.circular(50),
             child: Image.asset(
               imagePath,
                // This scales the image uniformly until it fills the avatar space

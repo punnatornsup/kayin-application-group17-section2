@@ -27,7 +27,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('images/Logo-removebg.png',fit: BoxFit.fill,height: 500,
+            Image.asset('images/LogoKAYIN.jpg',fit: BoxFit.fill,height: 500,
   width: 500,),
             Text('KAYIN', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Comfortaa',color: Colors.white)),
             SizedBox(height: 10),

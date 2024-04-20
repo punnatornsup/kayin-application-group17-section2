@@ -173,7 +173,7 @@ class _LoginDemoState extends State<LoginScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
+                                builder: (context) => HomeScreen(useremail:_emailcontroller.text ,)),
                           );
                         } else {
                           showDialog(

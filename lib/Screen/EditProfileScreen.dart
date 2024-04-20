@@ -86,10 +86,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         backgroundColor: Color.fromARGB(255, 149, 183, 255),
         title: Text('Edit Profile',
             style: TextStyle(
-                fontSize: 23.5,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black)),
+                color: Colors.white)),
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -98,6 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             onTap: _pickImage,
             child: CircleAvatar(
               radius: 85,
+              
               backgroundImage: widget.user.profileImage,
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -118,19 +119,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 
             decoration: InputDecoration(
                 labelText: 'Name',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           TextField(
             controller: _ageController,
@@ -138,18 +139,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
             decoration: InputDecoration(
                 labelText: 'Age',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           TextField(
             controller: _medicalConditionController,
@@ -157,18 +158,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
             decoration: InputDecoration(
                 labelText: 'Medical Condition',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           TextField(
             controller: _weightController,
@@ -176,18 +177,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
             decoration: InputDecoration(
                 labelText: 'Weight',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           TextField(
             controller: _heightController,
@@ -195,18 +196,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
             decoration: InputDecoration(
                 labelText: 'Height',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           TextField(
             controller: _bloodTypeController,
@@ -214,18 +215,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
             decoration: InputDecoration(
                 labelText: 'Blood Type',labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Comfortaa',
-                color: Colors.black),
+                color: Colors.white),
                 floatingLabelStyle: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
-                    color: Colors.black)),
+                    color: Colors.white)),
           ),
           ElevatedButton(
             onPressed: _saveProfile,

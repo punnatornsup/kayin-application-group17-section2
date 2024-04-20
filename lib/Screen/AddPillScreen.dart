@@ -65,9 +65,11 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 class AddPillScreen extends StatefulWidget {
+  final String useremail;
+  AddPillScreen({required this.useremail});
   @override
   _AddPillScreenState createState() => _AddPillScreenState();
 }
@@ -86,6 +88,7 @@ class _AddPillScreenState extends State<AddPillScreen> {
     'Saturday',
     'Sunday'
   ];
+
   Map<String, bool> dayToggles = {};
 
   @override
@@ -97,15 +100,20 @@ class _AddPillScreenState extends State<AddPillScreen> {
     });
   }
 
-  void _savePill() {
+  Future<void> _savePill() async {
     // Get the current user
-    User? user = FirebaseAuth.instance.currentUser;
-    print(user);
-    if (user != null &&
+    String useremail = widget.useremail;
+    var userQuery = await FirebaseFirestore.instance
+          .collection('Kayin_User')
+          .where('Email', isEqualTo: useremail)
+          .get();
+    
+    print(userQuery.docs[0].id);
+    if (
         pillName.isNotEmpty &&
         pillTime != null &&
         days.isNotEmpty) {
-      String userId = user.uid; // The user's unique ID
+      String userId = userQuery.docs[0].id; // The user's unique ID
       final pillData = {
         'name': pillName,
         'time': '${pillTime!.hour}:${pillTime!.minute}',
