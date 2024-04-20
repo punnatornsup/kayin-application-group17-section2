@@ -1,7 +1,7 @@
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/material.dart';
 import "./Screen/LoadingScreen.dart";
-import "Screen/testDatabase.dart";
+// import "Screen/testDatabase.dart";
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
