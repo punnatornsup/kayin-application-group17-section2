@@ -98,7 +98,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             onTap: _pickImage,
             child: CircleAvatar(
               radius: 85,
-              
               backgroundImage: widget.user.profileImage,
               child: Align(
                 alignment: Alignment.bottomRight,
