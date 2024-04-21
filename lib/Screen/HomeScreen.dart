@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .update({'isReminderOn': value});
                             if (value) {
                               print(pill['time'].split(':'));
-                              print(pillId);
+                              print(pillId.hashCode);
                               scheduleNotification(
                                   pill, pillId); // Schedule the notification
                             } else {
@@ -385,10 +385,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 80, // Set your width
                 height:
                     80, // Set your height, keep it the same as width for a square aspect ratio
-                child: Image.asset(
-                  'images/LogoKAYIN.jpg',
-                  width: 100,
-                  height: 200,
+                child: Container(
+                  height: 100,
+                   decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 228, 118, 36), // Set the background color here
+        borderRadius: BorderRadius.circular(50), // Makes the container circular
+      ),
+
+                  child: Image.asset(
+                    'images/LogoKAYIN.png',
+                    width: 60,
+                    height: 60,
+                  ),
                 ),
               ),
             ),
