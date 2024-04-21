@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'AddPillScreen.dart';
 import 'ProfileScreen.dart';
 import 'InformationScreen.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 // import 'package:flutter/foundation.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,12 +20,27 @@ class _HomeScreenState extends State<HomeScreen> {
   String useremail = "";
   String userid = '';
   String pillId = '';
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
     useremail = widget.useremail;
+    initializeNotifications();
     initializeUserID();
+  }
+
+//Initialize notification settings
+  void initializeNotifications() async { 
+    tz.initializeTimeZones();
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   Future<void> initializeUserID() async {
@@ -64,6 +82,46 @@ class _HomeScreenState extends State<HomeScreen> {
         print('Pill not found');
       }
     }
+  }
+
+// Function to schedule a notification
+  void scheduleNotification(Map<String, dynamic> pill, String pillId) {
+    var timeParts = pill['time'].split(':'); // Convert pill['time'] to DateTime
+    var now = tz.TZDateTime.now(tz.local);
+    var scheduledTime = tz.TZDateTime(tz.local, now.year, now.month,now.day, int.parse(timeParts[0]), int.parse(timeParts[1]));
+
+     // Adjust the scheduled time to the next occurrence if the current time is past the scheduled time
+  if (scheduledTime.isBefore(now)) {
+    scheduledTime = scheduledTime.add(Duration(days: 1));
+  }
+
+    var androidDetails = const AndroidNotificationDetails(
+        'channelId', 'channelName',
+        channelDescription: 'Description',
+        importance: Importance.max,
+        priority: Priority.high,
+        showWhen: false);
+    var platformDetails = NotificationDetails(android: androidDetails);
+  try {
+    flutterLocalNotificationsPlugin.zonedSchedule(
+      pillId.hashCode, // Unique int derived from the string
+      'Pill Reminder',
+      'Time to take your ${pill['name']}',
+      scheduledTime, // Scheduled TZDateTime
+      platformDetails,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  } catch (e) {
+    print('Failed to schedule notification: $e');
+  }
+  }
+
+// Function to cancel a notification
+  void cancelNotification(String pillId) {
+    flutterLocalNotificationsPlugin.cancel(pillId.hashCode);
   }
 
   void _showAddPillsPopup() {
@@ -227,6 +285,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .collection('pills')
                                 .doc(pillId)
                                 .update({'isReminderOn': value});
+                            if (value) {
+                              print(pill['time'].split(':'));
+                              print(pillId);
+                              scheduleNotification(
+                                  pill, pillId); // Schedule the notification
+                            } else {
+                              cancelNotification(
+                                  pillId); // Cancel the notification
+                            }
                           },
                           activeTrackColor: Color.fromARGB(255, 150, 255, 179),
                           activeColor: Colors.green,
