@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 //Initialize notification settings
-  void initializeNotifications() async { 
+  void initializeNotifications() async {
     tz.initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -88,12 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void scheduleNotification(Map<String, dynamic> pill, String pillId) {
     var timeParts = pill['time'].split(':'); // Convert pill['time'] to DateTime
     var now = tz.TZDateTime.now(tz.local);
-    var scheduledTime = tz.TZDateTime(tz.local, now.year, now.month,now.day, int.parse(timeParts[0]), int.parse(timeParts[1]));
+    var scheduledTime = tz.TZDateTime(tz.local, now.year, now.month, now.day,
+        int.parse(timeParts[0]), int.parse(timeParts[1]));
 
-     // Adjust the scheduled time to the next occurrence if the current time is past the scheduled time
-  if (scheduledTime.isBefore(now)) {
-    scheduledTime = scheduledTime.add(Duration(days: 1));
-  }
+    // Adjust the scheduled time to the next occurrence if the current time is past the scheduled time
+    if (scheduledTime.isBefore(now)) {
+      scheduledTime = scheduledTime.add(Duration(days: 1));
+    }
 
     var androidDetails = const AndroidNotificationDetails(
         'channelId', 'channelName',
@@ -102,21 +103,21 @@ class _HomeScreenState extends State<HomeScreen> {
         priority: Priority.high,
         showWhen: false);
     var platformDetails = NotificationDetails(android: androidDetails);
-  try {
-    flutterLocalNotificationsPlugin.zonedSchedule(
-      pillId.hashCode, // Unique int derived from the string
-      'Pill Reminder',
-      'Time to take your ${pill['name']}',
-      scheduledTime, // Scheduled TZDateTime
-      platformDetails,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
-  } catch (e) {
-    print('Failed to schedule notification: $e');
-  }
+    try {
+      flutterLocalNotificationsPlugin.zonedSchedule(
+        pillId.hashCode, // Unique int derived from the string
+        'Pill Reminder',
+        'Time to take your ${pill['name']}',
+        scheduledTime, // Scheduled TZDateTime
+        platformDetails,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e) {
+      print('Failed to schedule notification: $e');
+    }
   }
 
 // Function to cancel a notification
@@ -387,11 +388,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     80, // Set your height, keep it the same as width for a square aspect ratio
                 child: Container(
                   height: 100,
-                   decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 228, 118, 36), // Set the background color here
-        borderRadius: BorderRadius.circular(50), // Makes the container circular
-      ),
-
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(
+                        255, 228, 118, 36), // Set the background color here
+                    borderRadius: BorderRadius.circular(
+                        50), // Makes the container circular
+                  ),
                   child: Image.asset(
                     'images/LogoKAYIN.png',
                     width: 60,
